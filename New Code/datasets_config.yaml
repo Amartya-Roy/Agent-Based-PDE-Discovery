@@ -1,0 +1,95 @@
+# 📋 PDE DATASETS CONFIGURATION
+# This file defines available datasets without revealing their ground truth equations
+
+datasets:
+  KS_data:
+    name: "Kuramoto-Sivashinsky Dataset"
+    description: "Spatiotemporal dynamics data"
+    data_files:
+      solution: "Data/kuramoto_sivishinky.mat"
+      contour_plot: "Contours/KS_contour.png"
+    mat_keys:
+      u: "uu"  # solution field
+      x: "x"   # spatial grid
+      t: "tt"  # temporal grid
+    physics_domain: "fluid_dynamics"
+    
+  burgers_data:
+    name: "Burgers Dataset"
+    description: "Nonlinear wave propagation data"
+    data_files:
+      solution: "Data/burgers.mat"
+      contour_plot: "Contours/burgers_contour.png"
+    mat_keys:
+      u: "usol"
+      x: "x"
+      t: "t"
+    physics_domain: "fluid_dynamics"
+    
+  kdv_data:
+    name: "Korteweg-de Vries Dataset"
+    description: "Soliton wave data"
+    data_files:
+      solution: "Data/Kdv.mat"
+      contour_plot: "Contours/Kdv_contour.png"
+    mat_keys:
+      u: ["uu", "usol"]  # try multiple possible keys
+      x: "x"
+      t: "tt"
+    physics_domain: "water_waves"
+    
+  chafee_infante_data:
+    name: "Chafee-Infante Dataset"
+    description: "Reaction-diffusion dynamics"
+    data_files:
+      solution: "Data/chafee_infante_CI.npy"
+      x_grid: "Data/chafee_infante_x.npy"
+      t_grid: "Data/chafee_infante_t.npy"
+      contour_plot: "Contours/chafee_infante_contour.png"
+    file_type: "npy"
+    physics_domain: "biology"
+    
+  pde_divide_data:
+    name: "PDE Division Dataset"
+    description: "Complex spatiotemporal patterns"
+    data_files:
+      solution: "Data/PDE_divide.npy"
+      contour_plot: "Contours/PDE_divide_contour.png"
+    file_type: "npy"
+    domain_range:
+      x: [0, 1]
+      t: [0, 1]
+    physics_domain: "mathematical_physics"
+    
+  fisher_data:
+    name: "Fisher-KPP Dataset"
+    description: "Population dynamics with diffusion"
+    data_files:
+      solution: "Data/fisher_nonlin_groundtruth.mat"
+      contour_plot: "Contours/fisher_contour.png"
+    mat_keys:
+      u: "U"
+      x: "x"
+      t: "t"
+    physics_domain: "biology"
+
+# 🔬 DISCOVERY PARAMETERS
+discovery_settings:
+  subsample_factor: 4
+  derivative_stencil: "high_order"
+  noise_tolerance: 1e-6
+  max_terms: 3  # Force very sparse results
+  sparsity_threshold: 0.15  # Very aggressive sparsity
+  # Agent-4 acceptance loop
+  acceptance_threshold: 0.80
+  max_candidate_rounds: 5
+  
+# 🤖 LLM CONFIGURATION
+llm_config:
+  primary_model: "qwen/qwen3-coder-480b-a35b-instruct"
+  vision_model: "microsoft/phi-4-multimodal-instruct"
+  api_base: "https://integrate.api.nvidia.com/v1"
+  # API key: Set via NVIDIA_API_KEY environment variable (recommended)
+  # Or uncomment and set here: api_key: "nvapi-your-key-here"
+  temperature: 0.7
+  max_tokens: 2000
