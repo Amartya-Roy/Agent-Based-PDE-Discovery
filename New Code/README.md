@@ -295,8 +295,6 @@ Edit `datasets_config.yaml` to customize:
 discovery_settings:
   acceptance_threshold: 0.80    # Minimum R² to accept equation (0-1)
   max_candidate_rounds: 5       # Max retry rounds if below threshold
-  subsample_factor: 4           # Data subsampling (not used in current version)
-  max_terms: 3                  # Preferred max terms in equation
 
 # LLM models
 llm_config:
