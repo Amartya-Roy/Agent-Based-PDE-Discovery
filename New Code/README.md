@@ -1,4 +1,4 @@
-# LLM4ED: Agentic PDE Discovery System
+# Agents4ED: Agentic PDE Discovery System
 
 A **fully autonomous** 4-agent system for discovering partial differential equations (PDEs) from spatiotemporal data. The system uses Large Language Models (LLMs) and Vision-Language Models (VLMs) to identify governing equations without any hardcoded operator libraries.
 
