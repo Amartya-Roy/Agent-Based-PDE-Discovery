@@ -75,7 +75,7 @@ llm_config:
 
 ```bash
 # 1. Navigate to the project folder
-cd "/Users/amartyaroy/Downloads/New Code"
+cd "/Users/...."
 
 # 2. Create virtual environment (first time only)
 python3 -m venv .venv
