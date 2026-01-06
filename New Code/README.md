@@ -2,7 +2,7 @@
 
 A **fully autonomous** 4-agent system for discovering partial differential equations (PDEs) from spatiotemporal data. The system uses Large Language Models (LLMs) and Vision-Language Models (VLMs) to identify governing equations without any hardcoded operator libraries.
 
-## 🏗️ Architecture
+## Architecture
 
 The system uses 4 specialized AI agents in a collaborative pipeline:
 
@@ -33,21 +33,9 @@ The system uses 4 specialized AI agents in a collaborative pipeline:
             ▼
      [If R² < 80%: Loop back to Agent 3]
 ```
-
-## ✅ Fully Agentic Design
-
-**No manual hardcoding:**
-- ❌ No hardcoded operator/operand libraries
-- ❌ No pre-defined equation templates in code
-- ✅ LLM generates candidate equations dynamically
-- ✅ LLM writes Python fitting code dynamically
-- ✅ VLM analyzes visual patterns autonomously
-
-The only guidance provided is a list of "common PDE forms to consider" in the prompt (KdV, Burgers, Heat, KS, Chafee-Infante, Fisher-KPP), which the agents can use or ignore based on data analysis.
-
 ---
 
-## 📋 Requirements
+## Requirements
 
 ### Python Version
 - Python 3.9+ recommended
@@ -81,7 +69,7 @@ llm_config:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### macOS / Linux
 
@@ -151,7 +139,7 @@ python -c "from pde_discovery_system import predict_pde; predict_pde('kdv_data')
 
 ---
 
-## 📂 Available Datasets
+## Available Datasets
 
 The following datasets are pre-configured:
 
@@ -186,7 +174,7 @@ results = discovery.run_discovery()  # Runs on all datasets
 
 ---
 
-## 📊 Adding New Data
+## Adding New Data
 
 ### Supported Formats
 - `.mat` (MATLAB files) - requires scipy
@@ -276,7 +264,7 @@ The system looks for variables named `U_t`, `U_x`, `U_xx` in `.mat` files.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 New Code/
@@ -298,7 +286,7 @@ New Code/
 
 ---
 
-## 🔧 Configuration Options
+## Configuration Options
 
 Edit `datasets_config.yaml` to customize:
 
