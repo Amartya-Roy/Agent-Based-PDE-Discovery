@@ -1,5 +1,5 @@
 """
-LLM4ED: Agentic PDE Discovery System (4-Agent Architecture)
+Agent4ED: Agentic PDE Discovery System (4-Agent Architecture)
 ============================================================
 
 4 Agents:
@@ -175,20 +175,31 @@ Your job: Generate 10 DIVERSE candidate PDEs that could govern the observed data
 You WILL be shown (1) a contour plot and (2) numeric data samples (u and derivatives at points).
 Use both to propose candidates that actually match the data scale and behavior.
 
+ANALYSIS APPROACH:
+1. Look at the VLM's pattern analysis - what physics does it suggest?
+2. Examine the numeric samples - what is the scale of u_t vs derivatives?
+3. Consider: Is this diffusive? Dispersive? Convective? Reactive?
+
+Generate 10 candidates covering different physical mechanisms:
+- Diffusion terms: u_xx
+- Higher-order diffusion: u_xxxx  
+- Dispersion: u_xxx
+- Convection/advection: u*u_x
+- Reaction/source terms: u, u**2, u**3
 
 IMPORTANT CONSTRAINTS:
 - Only use these symbols on the RHS: u, u_x, u_xx, u_xxx, u_xxxx
 - Allowed operators: +, -, *, /, **, parentheses
-- Write coefficients explicitly (the Engineer will re-fit them).
-- For reaction terms, use u**3 NOT u^3
+- Write coefficients as c1, c2, etc. (the Engineer will fit them)
+- Use u**2 and u**3 NOT u^2 or u^3
 
 FORMAT:
-CANDIDATE 1: u_t = c1*u_xx + c2*u + c3*u**3
-  Reason: Chafee-Infante form - mandatory candidate for reaction-diffusion
+CANDIDATE 1: u_t = [expression]
+  Reason: [why this form based on VLM analysis]
 
 ... continue to CANDIDATE 10
 
-MOST LIKELY: [list 1-3 candidates that best match VLM observations]"""
+MOST LIKELY: [list 1-3 candidates that best match observations]"""
             )
             
             # Agent 4: Equation Arbiter - Selects the most plausible equation
@@ -528,7 +539,7 @@ Use ONLY numpy (import numpy as np). No other libraries."""
         """Remove terms with coefficients smaller than threshold relative to the largest coefficient.
         
         Uses relative threshold: a term is kept if |coeff| >= relative_threshold * |max_coeff|
-        This ensures important terms like u_xxx in KdV are not removed even if numerically small.
+
         Also removes terms with 0 coefficient and simplifies coefficient display.
         """
         if not equation:
@@ -797,17 +808,12 @@ Each row is one (x,t) point with u and derivatives.
 
 The contour plot shows u(x,t) where x is space (horizontal) and t is time (vertical).
 
-COMMON PDE FORMS TO CONSIDER:
-- KdV: u_t = c1*u*u_x + c2*u_xxx (dispersive waves with solitons)
-- Burgers: u_t = c1*u*u_x + c2*u_xx (shock waves)
-- Heat/Diffusion: u_t = c1*u_xx (diffusion)
-- Kuramoto-Sivashinsky: u_t = c1*u_xx + c2*u_xxxx + c3*u*u_x
-- Chafee-Infante: u_t = c1*u_xx + c2*u + c3*u**3
-
 WORKFLOW:
-1. VLM_Analyzer: Analyze the contour plot and identify physical patterns
-2. LLM_PDE_Generator: Generate 10 candidate PDEs based on patterns - INCLUDE the common forms above with coefficients to fit
-3. Engineer: Write Python code using least squares regression to fit each candidate and find the best one
+1. Phenomenology_Extractor (VLM): Analyze the contour plot and identify physical patterns
+2. Governing_Law_Synthesizer (LLM): Generate 10 diverse candidate PDEs based on the patterns
+3. Equation_Arbiter (Engineer): Write Python code to fit each candidate and select the best one
+
+AVAILABLE DERIVATIVE TERMS: u, u_x, u_xx, u_xxx, u_xxxx (and their products like u*u_x, u**2, u**3)
 
 DATA FILES FOR ENGINEER (already saved):
 - {data_dir}/u.npy
